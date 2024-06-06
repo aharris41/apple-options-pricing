@@ -8,3 +8,6 @@ traded companies globally during this time span, reaching a milestone $1 trillio
 
 The Black Scholes and the Binomial Option Pricing model were used separately during this project to compare the results from each pricing model to see if there was a difference, if any, 
 in the results from each models. A binomial tree was used to visually display when the best time to buy or sell the option was at an indicated time. 
+
+
+Apple Stock Price data set: https://www.kaggle.com/datasets/meetnagadia/apple-stock-price-from-19802021
