@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Dec  6 13:21:07 2023
-
 @author: alexandra
 """
 
 # Black Scholes and Binomial Option Pricing
 # Analyzing Apple (AAPL) stock from 2016-2021, then looking to see the call option price
-# Using Black Scholes to approximate the call option price, and binomial to accurately predict
+# Using Black Scholes to approximate the call option price, and binomial to accurately predict stock prices
 
 import numpy as np
 import pandas as pd
-#import csv as csv
 import math
 from scipy.stats import norm 
 import matplotlib.pyplot as plt
@@ -29,50 +26,15 @@ def BlackScholes_call_price(S, K, T, r, sigma):
 
     return callprice
 
-"""
-def Binomial_call_price(S, K, T, r, sigma, n, dataframe):
-    dt = T/n
-    print(dt)
-    u = np.exp(sigma * np.sqrt(dt))  # Upward movement
-    print(u)
-    d = 1 / u  # Downward movement
-    print(d)
-    p = (np.exp(r * dt) - d) / (u - d)  # Probability of upward movement
-    print(p)
 
-    # Extract relevant data from your dataset
-    stock_prices = dataframe['close'].values  # Close prices as stock prices
-    #avg_20day_volume = dataframe['avg_vol_20d'].values  # Avg 20-day volume
-    print(stock_prices)
-    # Create arrays to store option prices at each node
-    option_prices = np.zeros((n + 1, n + 1))
-    print(option_prices)
-    # Calculate option prices at expiration (time T)
-    for j in range(n + 1):
-        option_prices[n][j] = max(0, stock_prices[n] - K)
-    
-    # Backward induction to compute option prices at earlier nodes
-    for i in range(n - 1, -1, -1):
-        for j in range(i + 1):
-            intrinsic_value = np.maximum(0, stock_prices[i] - K)
-            continuation_value = np.exp(-r * dt) * (p * option_prices[i + 1][j + 1] + (1 - p) * option_prices[i + 1][j])
-            option_prices[i][j] = np.maximum(intrinsic_value, continuation_value)
-            print(intrinsic_value)
-            print(continuation_value)
-            print(option_prices[i],[j])
-        
-    print(option_prices)
-    return option_prices[0][0]  # Option price at initial node (time zero)
-"""
-
-def Binomial_call_price(S, K, t, r, sigma, n, dataframe):
+def Binomial_call_price(S, K, t, r, sigma, n, dataframe): # Credit in paper
     # Transitioning from Black Scholes to Binomial using parameters in powerpoint
     deltat = T/n 
     R = np.exp(r*deltat) # Risk free interest rate
     U = np.exp(sigma*(np.sqrt(deltat))) # Increase factor
     D = np.exp(-(sigma*(np.sqrt(deltat)))) # Decrease factor
     p = (R-D)/(U-D) # Risk neutral factor
-    print(deltat, R, U, D, p) # good
+    print(deltat, R, U, D, p) 
     
     # Start with the last node payoff
     optionprice = max(0, S * U**n - K)
@@ -175,8 +137,6 @@ K = 175.56 # from data set i dont feel like getting it out
 expiration = pd.to_datetime('2022-01-01')
 df['time to maturity'] = (expiration - df['date']).dt.days/365.25
 print(df[['date', 'time to maturity']])
-#ttm = df.iloc[-1]['time to maturity']
-#print(ttm)
 
 # or just set it = to 1
 T = 1
